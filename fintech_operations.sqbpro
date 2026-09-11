@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="C:/Users/prave/Downloads/fintech_operations.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="1555"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><table title="operations_tickets" custom_title="0" dock_id="1" table="4,18:mainoperations_tickets"/><dock_state state="000000ff00000000fd00000001000000020000024800000215fc0100000001fb000000160064006f0063006b00420072006f00770073006500310100000000000002480000012300ffffff000002480000000000000004000000040000000800000008fc00000000"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="operations_tickets" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_" freeze_columns="0"><sort/><column_widths><column index="1" value="63"/><column index="2" value="87"/><column index="3" value="98"/><column index="4" value="127"/><column index="5" value="55"/><column index="6" value="119"/><column index="7" value="71"/><column index="8" value="159"/><column index="9" value="159"/><column index="10" value="69"/><column index="11" value="108"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="SQL 1*">SELECT COUNT(*)AS TOTAL_TICKETS
+FROM operations_tickets;
+
+SELECT COUNT(*) AS failed_payments
+FROM operations_tickets
+WHERE Issue_Type = 'Payment Failure';
+
+SELECT COUNT(*) AS open_tickets
+FROM operations_tickets
+WHERE Status = 'Open';
+
+SELECT 
+    ROUND(AVG(Resolution_Hours), 2) AS avg_resolution_hours
+FROM operations_tickets
+WHERE Status = 'Resolved';
+
+SELECT
+    Issue_Type,
+COUNT(*) AS TICKET_COUNT
+FROM operations_tickets
+GROUP BY Issue_Type
+ORDER BY TICKET_COUNT DESC;
+
+SELECT
+    ROUND(
+        100.0 * SUM(
+            CASE
+                WHEN Status = 'Resolved'
+                 AND Resolution_Hours &lt;= SLA_Hours
+                THEN 1
+                ELSE 0
+            END
+        ) / COUNT(*),
+        2
+    ) AS sla_compliance_percent
+FROM operations_tickets;
+
+SELECT
+    Ticket_ID,
+    Issue_Type,
+    Assigned_Team,
+    Status,
+    Resolution_Hours,
+    SLA_Hours
+FROM operations_tickets
+WHERE Priority = 'High'
+ORDER BY Status, Resolution_Hours DESC;
+
+			
+
+
+      
+
+</sql><current_tab id="0"/></tab_sql></sqlb_project>
