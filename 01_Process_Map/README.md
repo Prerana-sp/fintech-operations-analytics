@@ -23,6 +23,7 @@ The objective was to understand the end-to-end payment flow and identify potenti
 🎥 **Process Map Walkthrough**
 
 [Watch the Process Map Video](https://drive.google.com/file/d/1XGu-m2q3NYDKDMLbyATrFpXKI4BLIrGG/view?usp=sharing)
+[Direct link](https://drive.google.com/file/d/1e_hKSA31JyFSELic6GeXhGaLU_HCnMV4/view?usp=sharing)
 
 ## Tool Used
 
